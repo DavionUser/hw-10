@@ -8,8 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class ListOfUsers {
-    private static final String FILE_PATH = "main\\files\\fileUsers.txt";
-    private static final String JSON_PATH = "main\\files\\user.json";
+    private static final String FILE_PATH = "src\\main\\files\\fileUsers.txt";
+    private static final String JSON_PATH = "src\\main\\files\\user.json";
 
     public static void main(String[] args) {
         File file = new File(FILE_PATH);
