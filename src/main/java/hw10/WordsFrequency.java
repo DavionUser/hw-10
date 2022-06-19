@@ -27,6 +27,7 @@ public class WordsFrequency {
 
             while (bReader.readLine() != null) {
                 words += " " + bReader.readLine();
+            }
                 String[] arW = words.split(" ");
                 List<String> list = List.of(arW);
 
@@ -37,7 +38,7 @@ public class WordsFrequency {
                         .filter(element -> element.getValue() > 0)
                         .collect(Collectors.toList())
                         .forEach(System.out::println);
-            }
+
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
