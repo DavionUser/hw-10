@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 public class ListOfUsers {
     private static final String FILE_PATH = "src\\main\\files\\fileUsers.txt";
@@ -16,7 +16,7 @@ public class ListOfUsers {
         File fileJson = new File(JSON_PATH);
         String json;
 
-        List<String> list = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         isFileExist(file);
         isFileExist(fileJson);
 
@@ -34,19 +34,19 @@ public class ListOfUsers {
             scanner.nextLine();
 
             while (scanner.hasNext()) {
-
-                try (BufferedWriter bWriter = new BufferedWriter(new FileWriter(fileJson))) {
-                    User user = new User(scanner.next(), scanner.nextInt());
-                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                    json = gson.toJson(user);
-                    list.add("\n" + json + "\n");
-                    bWriter.write(list.toString());
-
-                } catch (IOException e) {
-                    System.err.println(e.getMessage());
-                }
+                User user = new User(scanner.next(), scanner.nextInt());
+                users.add(user);
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+        try (BufferedWriter bWriter = new BufferedWriter(new FileWriter(fileJson))) {
+//            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Gson gson = new Gson();
+            json = gson.toJson(users);
+            bWriter.write(json);
+        } catch (IOException e) {
             System.err.println(e.getMessage());
         }
         System.out.println("Json file is written");
@@ -80,7 +80,10 @@ public class ListOfUsers {
 
         @Override
         public String toString() {
-            return getName() + getAge();
+            return "{\n" +
+                    "\"name\": \"" + name + ",\n" +
+                    "\"age\": " + age + ",\n" +
+                    "}";
         }
     }
 

@@ -1,6 +1,8 @@
 package hw10;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -28,14 +30,13 @@ public class WordsFrequency {
             while (bReader.readLine() != null) {
                 words += " " + bReader.readLine();
             }
-                String[] arW = words.split(" ");
-                List<String> list = List.of(arW);
+            List<String> list = new ArrayList<>(List.of(words.split(" ")));
 
                 list.stream()
                         .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                         .entrySet()
                         .stream()
-                        .filter(element -> element.getValue() > 0)
+                        .sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue()) * -1)
                         .collect(Collectors.toList())
                         .forEach(System.out::println);
 
